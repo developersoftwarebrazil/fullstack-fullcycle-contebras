@@ -1,0 +1,14 @@
+{
+    "python.analysis.autoImportCompletions": true,
+    "python.analysis.indexing": true,
+    "python.analysis.packageIndexDepths": [
+        {
+            "name": "django",
+            "includeAllSymbols": true,
+            "depth": 20
+        }
+    ],
+    "python.analysis.extraPaths": [
+        ".venv/lib/python3.12/site-packages",
+    ],
+}
