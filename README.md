@@ -1,4 +1,4 @@
-# Imersão Fullcycle 19 - Plataforma de streaming de vídeos
+# Projeto CONTEBRAS - Plataforma de streaming de vídeos e gerenciamento do curso
 
 ## Descrição
 
