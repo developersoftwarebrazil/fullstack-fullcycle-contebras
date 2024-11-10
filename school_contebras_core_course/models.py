@@ -1,3 +1,4 @@
+from datetime import date, timedelta
 from django.db import models
 
 # Create your models here.
@@ -32,9 +33,9 @@ class Course(models.Model):
   
 #Model de Gerenciemnto de Turma   
 class Classroom(models.Model):
-    name = models.CharField(max_length=100, default="Nome padrão", verbose_name='Curso')
+    name = models.CharField(max_length=100, verbose_name='Curso')
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='classrooms')
-    students = models.ManyToManyField(Student, through='RegistrationClassroom', related_name='classrooms')
+    # students = models.ManyToManyField(Student, through='RegistrationClassroom', related_name='classrooms')
 
     class Meta:
         verbose_name = "Turma"  # Singular
@@ -45,21 +46,27 @@ class Classroom(models.Model):
 
 class RegistrationClassroom(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE, verbose_name="nome do aluno")
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
     classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE, verbose_name='matriculado na turma')
     registration_date = models.DateField(auto_now_add=True, verbose_name="Matriculado em")
-
+    last_monthly_date = models.DateField(null=True, blank=True, verbose_name="Data da ultima mensadidade")
+  
     class Meta:
         verbose_name = "Matrícula"  # Singular
         verbose_name_plural = "Matrículas"  # Plural
 
     def __str__(self):
         return f"{self.student.name} matriculado na turma {self.classroom.name}"
-
-# def register_models():
-#     from .models import Student, Course, Classroom, RegistrationClassroom
-#     admin.site.register(Student)
-#     admin.site.register(Course)
-#     admin.site.register(Classroom)
-#     admin.site.register(RegistrationClassroom)
-
-# register_models()
+    
+    def can_access(self, video):
+        """
+            Verifica se o aluno tem acesso ao curso, considerando se a última mensalidade paga está em dia.
+            Supondo que a mensalidade vença mensalmente.
+        """
+        # Se não houver data de última mensalidade paga, o aluno não tem acesso
+        if not self.last_monthly_date:
+            return False
+        
+        # Verifica se a última mensalidade paga é dentro do último mês (30 dias)
+        due_date = self.last_monthly_date + timedelta(days=30)
+        return date.today() <= due_date

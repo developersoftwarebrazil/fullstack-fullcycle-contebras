@@ -1,5 +1,7 @@
 from django.db import models
 
+from school_contebras_core_course.models import Student, RegistrationClassroom
+
 # Create your models here.
 class Video(models.Model):
     title = models.CharField(max_length=100, unique=True, verbose_name='Título')
@@ -40,6 +42,16 @@ class VideoMedia(models.Model):
 
     def get_status_display(self):
         return VideoMedia.Status(self.status).label
+
+    def viridied_access_video(self,student: Student) ->bool:
+        """
+            Verifica se o aluno tem acesso ao vídeo, com base na matrícula e pagamento.
+        """
+        try:
+            registration = RegistrationClassroom.objects.get(student=student, course=self.course)
+            return registration.ok_access()
+        except RegistrationClassroom.DoesNotExist:
+            return False
 
     class Media:
         verbose_name = 'Mídia'

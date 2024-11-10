@@ -6,10 +6,11 @@ from django.http import HttpRequest, JsonResponse
 from django.shortcuts import render
 from django.urls import path, reverse
 from django.utils.html import format_html
+
 from school_contebras_core_video.models import Video, Tag
 from school_contebras_core_video.form import VideoChunkFinishUploadForm, VideoChunkUploadForm
 from school_contebras_core_video.services import VideoChunkUploadException, VideoMediaInvalidStatusException, VideoMediaNotExistsException, create_video_service_factory
-
+from school_contebras_core_course.models import Student
 # Register your models here.
 
 class VideoAdmin(admin.ModelAdmin):
@@ -52,6 +53,13 @@ class VideoAdmin(admin.ModelAdmin):
         return format_html(f'<a href="{url}">Upload</a>')
 
     redirect_to_upload.short_description = 'Upload'
+    
+    def is_ok_access(self, obj):
+     # Exemplo de aluno para verificação
+        student = Student.objects.first()  # Você pode ajustar para selecionar o aluno desejado
+        return obj.verificar_acesso_video(student)
+
+    is_ok_access.short_description = "Acesso Liberado?"
     
     @csrf_protect_m
     def upload_video_view(self, request, id):
@@ -98,6 +106,7 @@ class VideoAdmin(admin.ModelAdmin):
         return JsonResponse({}, status=204)
 
     def finish_upload_video_view(self, request, id):
+        
         if request.method != 'POST':
             return JsonResponse({'error': 'Método não permitido.'}, status=405)
         
