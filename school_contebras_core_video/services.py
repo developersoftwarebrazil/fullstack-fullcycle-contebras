@@ -96,7 +96,6 @@ class VideoService:
         source_path = self.get_chunk_directory(video_id)
         dest_path = f'/media/uploads/{video_id}'
         self.storage.move_chunks(source_path, dest_path)
-        
         self.__produce_message(video_id, dest_path, 'conversion')
 
 

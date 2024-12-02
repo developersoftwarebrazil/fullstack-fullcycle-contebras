@@ -8,7 +8,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         self.stdout.write(self.style.SUCCESS('Starting consumer....'))
-        exchange = Exchange('conversion_exchange', type='direct')
+        exchange = Exchange('conversion_exchange', type='direct', auto_delete=True)
         queue = Queue('chunks', exchange, routing_key='chunks')
 
         with create_rabbitmq_connection() as conn:

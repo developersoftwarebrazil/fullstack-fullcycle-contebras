@@ -24,7 +24,7 @@
         
     </div>
     <div class="form-row">
-        <input type="file" name="video" accept="video"/>
+        <input type="file" name="video" accept="video/mp4"/>
     </div>
     <div class="submit-row">
         <input type="submit" value="Fazer upload" class="default" name="btnUploadVideo" id="btnUploadVideo"/>
@@ -36,8 +36,8 @@
 </div>
 
 <script type="text/javascript">
-    const CHUNK_SIZE = 1 * 10240 * 10240; // 10 MB per chunk
-    const MAX_SIMULTANEOUS_UPLOADS = 5; // Number of simultaneous uploads
+    const CHUNK_SIZE = 1000 * 1024 * 1024; // 10 MB per chunk
+    const MAX_SIMULTANEOUS_UPLOADS = 10; // Number of simultaneous uploads
 
     document.getElementById('upload-form').addEventListener('submit', handleFormSubmit);
 

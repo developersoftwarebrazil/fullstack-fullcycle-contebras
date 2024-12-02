@@ -43,15 +43,15 @@ class VideoMedia(models.Model):
     def get_status_display(self):
         return VideoMedia.Status(self.status).label
 
-    def viridied_access_video(self,student: Student) ->bool:
-        """
-            Verifica se o aluno tem acesso ao vídeo, com base na matrícula e pagamento.
-        """
-        try:
-            registration = RegistrationClassroom.objects.get(student=student, course=self.course)
-            return registration.ok_access()
-        except RegistrationClassroom.DoesNotExist:
-            return False
+    # def viridied_access_video(self,student: Student) ->bool:
+    #     """
+    #         Verifica se o aluno tem acesso ao vídeo, com base na matrícula e pagamento.
+    #     """
+    #     try:
+    #         registration = RegistrationClassroom.objects.get(student=student, course=self.course)
+    #         return registration.ok_access()
+    #     except RegistrationClassroom.DoesNotExist:
+    #         return False
 
     class Media:
         verbose_name = 'Mídia'
