@@ -4,11 +4,18 @@ services:
     build: .
     ports:
       - 8000:8000
+    
+    environment:
+      - DATABASE_URL=postgres://postgres:root@postgres:5432/django_videos
+      #- DATABASE_URL=sqlite:///db.sqlite3\
+      - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672/
+      - ASSETS_URL=http://host.docker.internal:9000/media/uploads    
     volumes:
       - .:/home/my-user/app
       - external-storage:/media/uploads
     extra_hosts:
       - host.docker.internal:host-gateway
+
 
   db:
     image: postgres:15.8-alpine3.20
