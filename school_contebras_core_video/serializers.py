@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from core.models import Video
+from school_contebras_core_video.models import Video
 from django.conf import settings
 
 class VideoSerializer(serializers.ModelSerializer):

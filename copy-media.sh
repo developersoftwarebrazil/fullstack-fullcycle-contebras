@@ -18,4 +18,4 @@ mkdir /media/uploads/9 && cp -r /home/my-user/app/school_contebras_core_video/fi
 mkdir /media/uploads/10 && cp -r /home/my-user/app/school_contebras_core_video/fixtures/media/video-test/* /media/uploads/10
 
 # copy /home/my-user/core/fixtures/media/thumbnails/* to /media/uploads/* without create a folder
-cp -r /home/my-user/app/core/fixtures/media/thumbnails/* /media/uploads/
+cp -r /home/my-user/app/school_contebras_core_video/fixtures/media/thumbnails/* /media/uploads/

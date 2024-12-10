@@ -6,6 +6,11 @@
             "name": "django",
             "includeAllSymbols": true,
             "depth": 20
+        },
+        {
+            "name": "rest_framwork",
+            "includeAllSymbols": true,
+            "depth": 20
         }
     ],
     "python.analysis.extraPaths": [
