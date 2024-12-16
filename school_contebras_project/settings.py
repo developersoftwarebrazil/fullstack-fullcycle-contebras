@@ -29,7 +29,9 @@ SECRET_KEY = 'django-insecure-kb^n626u=nio@d&@7_e#=^z1uzzkh%)ku3_8)z7nc@aqen#wu(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [
+  'host.docker.internal','localhost'
+  ]
 
 
 # Application definition
@@ -142,7 +144,6 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = os.environ.get('ASSETS_URL', ' ') + '/'
-
 MEDIA_ROOT = '/media/uploads/'
 
 RABBITMQ_URL = os.environ.get('RABBITMQ_URL')

@@ -16,10 +16,12 @@ class VideoSerializer(serializers.ModelSerializer):
 
 
     def get_thumbnail(self, obj):
-        return f'http://localhost:9000{obj.thumbnail}'
+        assets_url = settings.ASSETS_URL
+        return f'{assets_url}/{obj.thumbnail}'
     
     def get_video_url(self, obj):
-        return f'http://localhost:9000{obj.video_media.video_path}'
+        assets_url = settings.ASSETS_URL    
+        return f'{assets_url}{obj.video_media.video_path}'
     
     class Meta:
         model = Video

@@ -4,19 +4,28 @@ import os
 from django.utils import timezone
 from django.db import models
 from django.forms import ValidationError
+from django.utils.text import get_valid_filename
 
 from school_contebras_core_course.models import Student, RegistrationClassroom
 
 def random_filename(instance, filename):
-    # Extrai a extensão do arquivo
-    ext = filename.split('.')[-1]
-    
-    # Usa o timestamp atual e o nome original para gerar o hash simples
-    hash_object = hashlib.md5(f"{filename}{time.time()}".encode('utf-8'))
-    hashed_filename = f"{hash_object.hexdigest()}.{ext}"
+    # Sanitiza o nome do arquivo
+    sanitized_filename = get_valid_filename(filename)
 
-    # Retorna o caminho completo dentro da pasta 'thumbnails/'
-    return os.path.join('/media/uploads', hashed_filename)
+    # Extrai a extensão do arquivo de forma segura
+    ext = os.path.splitext(sanitized_filename)[-1].lower()
+
+    # Valida a extensão (opcional, mas recomendado)
+    allowed_extensions = ['.jpg', '.jpeg', '.png', '.gif', '.pdf']  # Extensões permitidas
+    if ext not in allowed_extensions:
+        raise ValueError(f"Extensão de arquivo '{ext}' não permitida.")
+
+    # Gera um hash único usando o timestamp e o nome original do arquivo
+    hash_object = hashlib.md5(f"{sanitized_filename}{time.time()}".encode('utf-8'))
+    hashed_filename = f"{hash_object.hexdigest()}{ext}"
+
+    # Retorna o caminho seguro relativo ao MEDIA_ROOT
+    return os.path.join('thumbnails/', hashed_filename)
 
 # Create your models here.
 class Video(models.Model):

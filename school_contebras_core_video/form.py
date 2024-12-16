@@ -1,6 +1,6 @@
 from django import forms
 
-MAX_VIDEO_CHUNK_SIZE = 100 * 1024 * 1024  # 100 MB
+MAX_VIDEO_CHUNK_SIZE = 256 * 1024 * 1024  # 200 MB
 
 class VideoChunkUploadForm(forms.Form):
     chunk = forms.FileField(required=True)  # O arquivo chunk
