@@ -8,6 +8,7 @@ services:
   django:
     build: .
     ports:
+    
       - 8000:8000
     environment:
       - DATABASE_URL=postgres://postgres:root@postgres:5432/django_videos
